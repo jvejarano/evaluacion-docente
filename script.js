@@ -1,5 +1,144 @@
 // ================================
-// SECTION 1: Evaluación Continua (50%)
+// SECTION 0: Evaluación Diagnóstica (10%)
+// ================================
+function agregarFilaDiagnostica() {
+    let nombre = document.getElementById("nombreDiag").value.trim();
+    let conocimientos = parseFloat(document.getElementById("conocimientosPrevios").value) || 0;
+    let habilidades = parseFloat(document.getElementById("habilidadesBased").value) || 0;
+    
+    if (nombre === "") {
+      alert("Por favor, ingresa el nombre del estudiante.");
+      return;
+    }
+    if (conocimientos < 0 || conocimientos > 30) {
+      alert("Conocimientos Previos debe estar entre 0 y 30.");
+      return;
+    }
+    if (habilidades < 0 || habilidades > 70) {
+      alert("Habilidades Base debe estar entre 0 y 70.");
+      return;
+    }
+    
+    let total = conocimientos + habilidades;
+    let promedio10 = total * 0.10;
+    let tableBody = document.getElementById("tabla-body-diagnostica");
+    let row = tableBody.insertRow();
+    row.innerHTML = `
+      <td>${nombre}</td>
+      <td>${conocimientos.toFixed(2)}</td>
+      <td>${habilidades.toFixed(2)}</td>
+      <td>${total.toFixed(2)}</td>
+      <td>${promedio10.toFixed(2)}</td>
+      <td class="acciones-col">
+        <button onclick="editarFilaDiagnostica(this)" class="btn btn-sm btn-warning">Editar</button>
+        <button onclick="eliminarFilaDiagnostica(this)" class="btn btn-sm btn-danger">Eliminar</button>
+      </td>
+    `;
+    actualizarPromedioDiagnostica();
+    
+    // Limpiar formulario
+    document.getElementById("nombreDiag").value = "";
+    document.getElementById("conocimientosPrevios").value = "";
+    document.getElementById("habilidadesBased").value = "";
+}
+
+function eliminarFilaDiagnostica(button) {
+    let row = button.parentNode.parentNode;
+    row.parentNode.removeChild(row);
+    actualizarPromedioDiagnostica();
+}
+
+function editarFilaDiagnostica(button) {
+    let row = button.parentNode.parentNode;
+    let nombreActual = row.cells[0].innerText;
+    let conocimientosActual = row.cells[1].innerText;
+    let habilidadesActual = row.cells[2].innerText;
+    
+    row.dataset.originalNombre = nombreActual;
+    row.dataset.originalConocimientos = conocimientosActual;
+    row.dataset.originalHabilidades = habilidadesActual;
+    
+    row.cells[0].innerHTML = `<input type="text" value="${nombreActual}" class="form-control">`;
+    row.cells[1].innerHTML = `<input type="number" value="${parseFloat(conocimientosActual).toFixed(2)}" step="0.01" min="0" max="30" class="form-control">`;
+    row.cells[2].innerHTML = `<input type="number" value="${parseFloat(habilidadesActual).toFixed(2)}" step="0.01" min="0" max="70" class="form-control">`;
+    
+    row.cells[5].innerHTML = `
+      <button onclick="guardarEdicionDiagnostica(this)" class="btn btn-sm btn-success">Guardar</button>
+      <button onclick="cancelarEdicionDiagnostica(this)" class="btn btn-sm btn-secondary">Cancelar</button>
+    `;
+}
+
+function guardarEdicionDiagnostica(button) {
+    let row = button.parentNode.parentNode;
+    let nombre = row.cells[0].querySelector('input').value.trim();
+    let conocimientos = parseFloat(row.cells[1].querySelector('input').value) || 0;
+    let habilidades = parseFloat(row.cells[2].querySelector('input').value) || 0;
+    
+    if (nombre === "") {
+      alert("Por favor, ingresa el nombre del estudiante.");
+      return;
+    }
+    if (conocimientos < 0 || conocimientos > 30) {
+      alert("Conocimientos Previos debe estar entre 0 y 30.");
+      return;
+    }
+    if (habilidades < 0 || habilidades > 70) {
+      alert("Habilidades Base debe estar entre 0 y 70.");
+      return;
+    }
+    
+    let total = conocimientos + habilidades;
+    let promedio10 = total * 0.10;
+    row.cells[0].innerText = nombre;
+    row.cells[1].innerText = conocimientos.toFixed(2);
+    row.cells[2].innerText = habilidades.toFixed(2);
+    row.cells[3].innerText = total.toFixed(2);
+    row.cells[4].innerText = promedio10.toFixed(2);
+    row.cells[5].innerHTML = `
+      <button onclick="editarFilaDiagnostica(this)" class="btn btn-sm btn-warning">Editar</button>
+      <button onclick="eliminarFilaDiagnostica(this)" class="btn btn-sm btn-danger">Eliminar</button>
+    `;
+    
+    delete row.dataset.originalNombre;
+    delete row.dataset.originalConocimientos;
+    delete row.dataset.originalHabilidades;
+    
+    actualizarPromedioDiagnostica();
+}
+
+function cancelarEdicionDiagnostica(button) {
+    let row = button.parentNode.parentNode;
+    let nombre = row.dataset.originalNombre;
+    let conocimientos = parseFloat(row.dataset.originalConocimientos) || 0;
+    let habilidades = parseFloat(row.dataset.originalHabilidades) || 0;
+    let total = conocimientos + habilidades;
+    let promedio10 = total * 0.10;
+    
+    row.cells[0].innerText = nombre;
+    row.cells[1].innerText = conocimientos.toFixed(2);
+    row.cells[2].innerText = habilidades.toFixed(2);
+    row.cells[3].innerText = total.toFixed(2);
+    row.cells[4].innerText = promedio10.toFixed(2);
+    row.cells[5].innerHTML = `
+      <button onclick="editarFilaDiagnostica(this)" class="btn btn-sm btn-warning">Editar</button>
+      <button onclick="eliminarFilaDiagnostica(this)" class="btn btn-sm btn-danger">Eliminar</button>
+    `;
+}
+
+function actualizarPromedioDiagnostica() {
+    let tableBody = document.getElementById("tabla-body-diagnostica");
+    let rows = tableBody.getElementsByTagName("tr");
+    let suma = 0, count = rows.length;
+    for (let row of rows) {
+      suma += parseFloat(row.cells[4].innerText) || 0;
+    }
+    let promedio = count ? (suma / count).toFixed(2) : "0.00";
+    document.getElementById("promedio-total-diagnostica").innerText = promedio;
+    actualizarNotaFinal();
+}
+
+// ================================
+// SECTION 1: Evaluación Continua (45%)
 // ================================
 function agregarFila() {
     let nombre = document.getElementById("nombre").value.trim();
@@ -313,10 +452,10 @@ function agregarFila() {
   }
   
   // ================================
-  // SECTION 3: Examen Parcial (30%)
+  // SECTION 3: Examen Parcial (25%)
   // ================================
 // ================================
-// SECTION 3: Examen Parcial (30%)
+// SECTION 3: Examen Parcial (25%)
 // ================================
 function calcularPromedio3() {
     const nombre = document.getElementById('nombre3').value.trim();
@@ -331,8 +470,8 @@ function calcularPromedio3() {
         return;
     }
 
-    const promedio30 = nota * 0.30;
-    document.getElementById('promedio-total3').innerText = promedio30.toFixed(2);
+    const promedio25 = nota * 0.25;
+    document.getElementById('promedio-total3').innerText = promedio25.toFixed(2);
     actualizarNotaFinal();
 }
   
@@ -340,10 +479,11 @@ function calcularPromedio3() {
   // Nota Final: Suma de los promedios de las 3 secciones
   // ================================
   function actualizarNotaFinal() {
+    let p0 = parseFloat(document.getElementById('promedio-total-diagnostica').innerText) || 0;
     let p1 = parseFloat(document.getElementById('promedio-total').innerText) || 0;
     let p2 = parseFloat(document.getElementById('promedio-total2').innerText) || 0;
     let p3 = parseFloat(document.getElementById('promedio-total3').innerText) || 0;
-    let suma = p1 + p2 + p3;
+    let suma = p0 + p1 + p2 + p3;
     document.getElementById('nota-final').innerText = suma.toFixed(2);
   }
   

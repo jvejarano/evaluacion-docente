@@ -16,9 +16,51 @@
     </div>
 
     <!-- ==================================================== -->
-    <!-- 1. EVALUACIÓN CONTINUA (50%) -->
+    <!-- 1. EVALUACIÓN DIAGNÓSTICA (10%) -->
     <!-- ===================================================== -->
-    <h2>1. Evaluación Continua (50%)</h2>
+    <h2>1. Evaluación Diagnóstica (10%)</h2>
+    <div class="form-container no-print mb-3">
+      <div class="row g-2">
+        <div class="col-md-4">
+          <input type="text" id="nombreDiag" class="form-control" placeholder="Nombre del Estudiante">
+        </div>
+        <div class="col-md-4">
+          <input type="number" id="conocimientosPrevios" class="form-control" placeholder="Conocimientos Previos (0-30)" step="0.01" min="0" max="30">
+        </div>
+        <div class="col-md-4">
+          <input type="number" id="habilidadesBased" class="form-control" placeholder="Habilidades Base (0-70)" step="0.01" min="0" max="70">
+        </div>
+      </div>
+      <div class="mt-2">
+        <button class="btn btn-success" onclick="agregarFilaDiagnostica()">Agregar</button>
+      </div>
+    </div>
+    <table class="table table-bordered">
+      <thead class="table-light">
+        <tr>
+          <th>Estudiante</th>
+          <th>Conocimientos Previos (30 pts)</th>
+          <th>Habilidades Base (70 pts)</th>
+          <th>Total</th>
+          <th>Promedio 10%</th>
+          <th class="acciones-col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody id="tabla-body-diagnostica"></tbody>
+      <tfoot>
+        <tr>
+          <td colspan="3"><strong>Promedio Total (10%)</strong></td>
+          <td></td>
+          <td id="promedio-total-diagnostica">0.00</td>
+          <td></td>
+        </tr>
+      </tfoot>
+    </table>
+
+    <!-- ==================================================== -->
+    <!-- 2. EVALUACIÓN CONTINUA (45%) -->
+    <!-- ===================================================== -->
+    <h2>2. Evaluación Continua (45%)</h2>
     <div class="form-container no-print mb-3">
       <div class="row g-2">
         <div class="col-md-3">
@@ -52,7 +94,7 @@
       <tbody id="tabla-body"></tbody>
       <tfoot>
         <tr>
-          <td colspan="4"><strong>Promedio Total (50%)</strong></td>
+          <td colspan="4"><strong>Promedio Total (45%)</strong></td>
           <td id="promedio-total">0.00</td>
           <td></td>
         </tr>
@@ -60,9 +102,9 @@
     </table>
 
     <!-- ===================================================== -->
-    <!-- 2. DEFENSA DE PERFIL DE INVESTIGACIÓN (20%) -->
+    <!-- 3. DEFENSA DE PERFIL DE INVESTIGACIÓN (20%) -->
     <!-- ===================================================== -->
-    <h2>2. Defensa de Perfil de Investigación (20%)</h2>
+    <h2>3. Defensa de Perfil de Investigación (20%)</h2>
     <div class="form-container no-print mb-3">
       <div class="row g-2">
         <div class="col-md-4">
@@ -114,10 +156,10 @@
     </table>
 
     <!-- ===================================================== -->
-    <!-- 3. EXAMEN PARCIAL (30%) -->
+    <!-- 4. EXAMEN PARCIAL (25%) -->
     <!-- ===================================================== -->
     <section id="examen-parcial">
-        <h2>3. Examen Parcial (30%)</h2>
+        <h2>4. Examen Parcial (25%)</h2>
         <div class="form-container no-print mb-3">
             <div class="row g-2">
                 <div class="col-md-6">
@@ -133,7 +175,7 @@
                 <button class="btn btn-success" onclick="calcularPromedio3()">Calcular Promedio</button>
             </div>
             <div class="mt-3">
-                <strong>Promedio Total (30%):</strong> <span id="promedio-total3">0.00</span>
+                <strong>Promedio Total (25%):</strong> <span id="promedio-total3">0.00</span>
             </div>
         </div>
     </section>
