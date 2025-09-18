@@ -1,17 +1,20 @@
 # Evaluación Completa Web App
 
-Esta aplicación web es una herramienta para gestionar la evaluación de docentes y estudiantes, dividida en tres secciones ponderadas:
+Esta aplicación web es una herramienta para gestionar la evaluación de docentes y estudiantes, dividida en cuatro secciones ponderadas:
 
-1. **Evaluación Continua (50%)**
-2. **Defensa de Perfil de Investigación (20%)**
-3. **Examen Parcial (30%)**
+1. **Evaluación Diagnóstica (10%)**
+2. **Evaluación Continua (45%)**
+3. **Defensa de Perfil de Investigación (20%)**
+4. **Examen Parcial (25%)**
 
 La aplicación permite realizar operaciones CRUD (crear, leer, actualizar y eliminar) en cada sección, calcular automáticamente los promedios de cada parte y sumar el total de la evaluación final. Además, cuenta con una versión imprimible optimizada.
+
+La **Evaluación Diagnóstica** permite evaluar los conocimientos previos y habilidades base de los estudiantes al inicio del proceso educativo, proporcionando una base sólida para el seguimiento del progreso académico.
 
 ## Características
 
 - **CRUD Completo:** Agregar, editar y eliminar registros en cada sección.
-- **Cálculos Automáticos:** Se realizan automáticamente el total por registro, los promedios ponderados por sección y la nota final (suma de los tres promedios).
+- **Cálculos Automáticos:** Se realizan automáticamente el total por registro, los promedios ponderados por sección y la nota final (suma de los cuatro promedios).
 - **Validaciones de Datos:** Se validan los rangos permitidos para cada campo.
 - **Interfaz Responsiva:** Utiliza [Bootstrap 5](https://getbootstrap.com/) para una apariencia moderna y adaptativa.
 - **Versión Imprimible:** Incluye estilos especiales para imprimir, ocultando formularios y botones de acción.
